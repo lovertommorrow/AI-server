@@ -7,14 +7,14 @@ import { GenerateContentParam } from './modules/Gemini/Gemini.model';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private aiService: GeminiService,
+    private geminiService: GeminiService,
   ) {}
 
   @Get()
   async getHello(): Promise<string> {
     const prompt = 'Write a story about a magic backpack.';
 
-    const result = await this.aiService
+    const result = await this.geminiService
       .getDefaultModel()
       .generateContent(prompt);
     const response = result.response;
@@ -26,7 +26,7 @@ export class AppController {
     @Body() body: { modelName: string; modelBody: GenerateContentParam },
   ): Promise<string> {
     console.log("body: ",body.modelName,body.modelBody)
-    const result = await this.aiService.getGenContent(body);
+    const result = await this.geminiService.getGenContent(body);
     console.log("result: ", result)
     return result;
   }
